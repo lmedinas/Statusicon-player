@@ -1,4 +1,4 @@
-/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
+/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 8 -*- */
 /*
  * main.c
  * Copyright (C) Luis Medinas 2010 <lmedinas@gmail.com>
@@ -28,6 +28,22 @@ quit_cb(GtkWidget *widget, gpointer data) {
 	return 0;
 }
 
+void
+about_cb(GtkWidget *widget, gpointer data) 
+{
+    GtkWidget *about;
+    const gchar *authors[] = {"Luis Medinas <lmedinas@gmail.com\n", NULL};
+    
+    about = gtk_about_dialog_new();
+    gtk_about_dialog_set_name(GTK_ABOUT_DIALOG(about), "StatusIcon Player");
+    gtk_about_dialog_set_authors (GTK_ABOUT_DIALOG(about), authors);
+    gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG(about), "Copyright 2010 (c) Luis Medinas\n");
+    gtk_about_dialog_set_license (GTK_ABOUT_DIALOG(about), "GPLv2");
+    gtk_about_dialog_set_version (GTK_ABOUT_DIALOG(about), "0.1");
+    gtk_about_dialog_set_website (GTK_ABOUT_DIALOG(about), "http://gitorious.org/statusicon-player/statusicon-player");
+    gtk_dialog_run(GTK_DIALOG (about));
+    gtk_widget_destroy(about);
+}
 void 
 run_gst(gchar *filename) {
 		
@@ -80,7 +96,8 @@ void
 popup (GtkStatusIcon *statusicon,
             guint button,
             guint activate_time,
-            gpointer user_data) {
+            gpointer user_data) 
+{
 				GtkWidget *menu, *item;
 
 				menu = gtk_menu_new();
@@ -94,6 +111,12 @@ popup (GtkStatusIcon *statusicon,
 				gtk_menu_append(menu, item);
 				g_signal_connect(G_OBJECT(item), "activate",
 				                 G_CALLBACK(stop_gst),
+				                 NULL);
+
+				item = gtk_image_menu_item_new_from_stock(GTK_STOCK_ABOUT, NULL);
+				gtk_menu_append(menu, item);
+				g_signal_connect(G_OBJECT(item), "activate",
+				                 G_CALLBACK(about_cb),
 				                 NULL);
 
 				item = gtk_separator_menu_item_new();
