@@ -113,7 +113,7 @@ popup (GtkStatusIcon *statusicon,
 				                NULL,
 				                NULL,
 				                gtk_status_icon_position_menu,
-				                user_data,
+				                statusicon,
 				                button,
 				                activate_time);
 			}
