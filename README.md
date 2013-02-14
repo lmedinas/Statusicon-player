@@ -1,0 +1,1 @@
+Demo of a GTK+ StatusIcon with Gstreamer
